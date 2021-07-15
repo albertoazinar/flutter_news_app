@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news_info.dart';
 import 'package:news_app/services/api_manager.dart';
@@ -34,13 +35,43 @@ class _HomeState extends State<Home>{
                             var article = snapshot.data!.articles[index];
                               return Container(
                                     height: 100,
+                                    margin: const EdgeInsets.all(8),
                                     child: Row(
-                                      mainAxisSize: MainAxisSize.min,
                                       children:
                                         <Widget>[
-                                          Image.network(article.urlToImage),
-                                        ],
+                                          Card(clipBehavior: Clip.antiAlias,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(24),
+                                            ),
+                                            child: AspectRatio(
+                                                aspectRatio: 1,
+                                                child: Image.network(
+                                                  article.urlToImage,
+                                                  fit: BoxFit.cover,
+                                                )),
+                                          ),
+                                            Flexible(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                children:<Widget>[
+                                                  Text(
+                                                    article.title,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight: FontWeight.bold
+                                                    )
+                                                  ),
+                                                  Text(
+                                                    article.description,
+                                                    maxLines: 2,
+                                                    // overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
 
+                                        ],
                                     )
                               );
                       });
